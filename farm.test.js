@@ -9,7 +9,7 @@ const { getYieldForPlant,
 describe("getYieldForPlant", () => {
     const corn = {
         name: "corn",
-        yield: 30,
+        yield: 3,
         factors:{
             sun:{
                 low: -50,
@@ -18,7 +18,7 @@ describe("getYieldForPlant", () => {
             },
             wind:{
                 low: 60,
-                medium: 0,
+                medium: -10,
                 high: -50,
             },
             underground:{
@@ -27,27 +27,51 @@ describe("getYieldForPlant", () => {
                 garden: 50,
             },
         },
-    };
+    }
 const environmentFactors = {
     sun: "low",
+    wind: "medium",
     underground: "clay"
 };
     test("Get yield for plant with environment factors", () => {
-        expect(getYieldForPlant(corn, environmentFactors)).toBe(18);
-    });
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(0,57);
+    })
 });
 
 describe("getYieldForCrop", () => {
-    test("Get yield for crop, simple", () => {
+    test("Get yield for crop with environmentFactors", () => {
         const corn = {
             name: "corn",
-            yield: 3,
+            yield: 30,
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: 20,
+                    sand: -10,
+                    garden: 50,
+                },
+            },
         };
-        const input = {
-            crop: corn,
-            numCrops: 10,
-        };
-        expect(getYieldForCrop(input)).toBe(30);
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    }
+    const environmentFactors = {
+        sun: "low",
+        wind: "medium",
+        underground: "clay"
+    };
+        
+        expect(getYieldForCrop(input, environmentFactors)).toBe(5,7);
     });
 });
 
