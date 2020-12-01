@@ -1,15 +1,15 @@
 // helpers
 const getPercentageFactor = (crop, envirnonmentFactors) =>{
-    let farmerFactor = crop.yield;
+    let farmerFactor;
     switch (envirnonmentFactors.sun){
         case "low":
-            farmerFactor = (farmerFactor/100) * (100 + crop.factors.sun.low);
+            farmerFactor = (crop.yield/100) * (100 + crop.factors.sun.low);
             break;
         case "medium":
-            farmerFactor = (farmerFactor/100) * (100 + crop.factors.sun.medium);
+            farmerFactor = (crop.yield/100) * (100 + crop.factors.sun.medium);
             break;
         case "high":
-            farmerFactor = (farmerFactor/100) * (100 + crop.factors.sun.high);
+            farmerFactor = (crop.yield/100) * (100 + crop.factors.sun.high);
     }
 }
 
