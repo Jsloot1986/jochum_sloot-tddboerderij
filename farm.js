@@ -37,19 +37,19 @@ const getPercentageFactor = (crop, environmentFactor) =>{
 
 // functions 
 const getYieldForPlant = (crop, environmentFactors) => getPercentageFactor(crop, environmentFactors);
-const getYieldForCrop = (crop, environmentFactors) => crop.numCrops * getYieldForPlant(crop, environmentFactors);
+const getYieldForCrop = (crop, input, environmentFactors) => input.numCrops * getYieldForPlant(crop, environmentFactors);
 
 const getTotalYield = ({crops}) => {
     let yield_total = 0;
     crops.forEach(element => {
-        yield_total += element.crop.yield * element.numCrops
+        yield_total += element.crop.yield * element.numCrops * getYieldForPlant(element.crop, element.environmentFactors);
     })
     return yield_total
 }
 const getCostsForCrop = (crop) => crop.numCrops * crop.costs;
-const getRevenueForCrop = (crop) => crop.numCrops * getPercentageFactor(crop) * crop.salesPrice;
-const getProfitForCrop = (crop) => getRevenueForCrop(crop) - getCostsForCrop(crop);
-const getTotalProfit = (crop) => getRevenueForCrop(crop) - getProfitForCrop(crop);
+const getRevenueForCrop = (crop, environmentFactors) => crop.numCrops * getYieldForPlant(crop, environmentFactors) * crop.salesPrice;
+const getProfitForCrop = (crop, environmentFactors) => getRevenueForCrop(crop, environmentFactors) - getCostsForCrop(crop, environmentFactors);
+const getTotalProfit = (crop, environmentFactors) => getRevenueForCrop(crop, environmentFactors) - getProfitForCrop(crop, environmentFactors);
 
 
 module.exports = {
