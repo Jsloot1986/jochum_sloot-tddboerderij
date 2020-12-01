@@ -127,24 +127,75 @@ describe("getTotalYield", () => {
         const corn = {
             name: "corn",
             yield: 3,
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: -20,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
         };
         const pumpkin = {
             name: "pumpkin",
             yield: 4,
+            factors:{
+                sun:{
+                    low: -30,
+                    medium: 0,
+                    high: 60,
+                },
+                wind:{
+                    low: 50,
+                    medium: -10,
+                    high: -50,
+                },
+                underground:{
+                    clay: -10,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
         };
         const crops = [
-            { crop: corn, numCrops: 5 },
-            { crop: pumpkin, numCrops: 2 },
+            { crop: corn, numCrops: 5, environmentFactors:{ sun: "low", wind: "low", underground: "clay"} },
+            { crop: pumpkin, numCrops: 2, environmentFactors:{ sun: "high", wind: "low", underground: "clay"} },
         ];
-        expect(getTotalYield({ crops })).toBe(23);
+        expect(getTotalYield({ crops })).toBe(64.8);
     });
 
     test("Calculate total yield with 0 amount", () => {
         const corn = {
             name: "corn",
             yield: 3,
-        };
-        const crops = [{ crop: corn, numCrops: 0 }];
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: -20,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
+    };
+        const crops = [{ crop: corn, numCrops: 0, environmentFactors:{sun:"low", wind: "low", underground: "clay"} }];
         expect(getTotalYield({ crops })).toBe(0);
     });
 });
@@ -155,9 +206,32 @@ describe("getCostsForCrop", () =>{
             name: "corn",
             yield: 3,
             numCrops: 5,
-            costs: 2
+            costs: 2,
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: -20,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
         };
-        expect(getCostsForCrop(crop)).toBe(10);
+    const environmentFactors = {
+        sun: "low",
+        wind: "low",
+        underground: "clay",
+    };
+
+        expect(getCostsForCrop(crop, environmentFactors)).toBe(10);
     });
 });
 describe("getRevenueForCrop", () =>{
@@ -167,9 +241,31 @@ describe("getRevenueForCrop", () =>{
             yield: 3,
             numCrops: 5,
             costs: 2,
-            salesPrice: 4
+            salesPrice: 4,
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: -20,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
         };
-        expect(getRevenueForCrop(crop)).toBe(60);
+    const environmentFactors = {
+        sun: "low",
+        wind: "low",
+        underground: "clay",
+    };
+        expect(getRevenueForCrop(crop, environmentFactors)).toBe(48);
     });
 });
 describe("getProfitForCrop", () =>{
@@ -179,9 +275,31 @@ describe("getProfitForCrop", () =>{
             yield: 3,
             numCrops: 5,
             costs: 2,
-            salesPrice: 4
+            salesPrice: 4,
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: -20,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
         };
-        expect(getProfitForCrop(crop)).toBe(50);
+    const environmentFactors = {
+        sun: "low",
+        wind: "low",
+        underground: "clay",
+    };
+        expect(getProfitForCrop(crop, environmentFactors)).toBe(38);
     });
 });
 
@@ -192,8 +310,30 @@ describe("getTotalProfit", () =>{
             yield: 3,
             numCrops: 5,
             costs: 2,
-            salesPrice: 4
+            salesPrice: 4,
+            factors:{
+                sun:{
+                    low: -50,
+                    medium: 0,
+                    high: 50,
+                },
+                wind:{
+                    low: 60,
+                    medium: 0,
+                    high: -50,
+                },
+                underground:{
+                    clay: -20,
+                    leem: 60,
+                    löss: 50,
+                },
+            },
         };
-        expect(getTotalProfit(crop)).toBe(10);
+    const environmentFactors = {
+        sun: "low",
+        wind: "low",
+        underground: "clay",
+    };
+        expect(getTotalProfit(crop, environmentFactors)).toBe(10);
     });
 });
